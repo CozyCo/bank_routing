@@ -23,7 +23,7 @@ Gem::Specification.new do |gem|
 	gem.add_development_dependency 'yard', '~> 0.8'
 	gem.add_development_dependency 'redis'
 	
-	gem.add_dependency 'typhoeus'
-	gem.add_dependency 'yajl-ruby'
+	gem.add_dependency 'typhoeus', '~> 0.6'
+	gem.add_dependency 'yajl-ruby', '~> 1.2'
 	
 end
