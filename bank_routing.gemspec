@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
 	gem.license       = "MIT"
 	gem.authors       = ["Cozy"]
 	gem.email         = "oss@cozy.co"
-	gem.homepage      = "https://rubygems.org/gems/bank_routing"
+	gem.homepage      = "https://github.com/cozy-oss/bank_routing"
 
 	gem.files         = `git ls-files`.split($/)
 	gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
