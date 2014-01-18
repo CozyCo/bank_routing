@@ -29,7 +29,7 @@ RoutingNumber.init!( store_in: :redis, store_opts: { host: "localhost", db: 15 }
 
 This will store the routing number database, after being loaded from the Federal Reserve website, into Redis in database number 15. Access works exactly the same.
 
-You can also configure the service independently of loading the routing database. This works especially well in systems where there are child processes connecting to the same store (Redis, for example). In this case, the routing database will be loaded on first access (by the first child process of a Unicorn web server, for example) - it's essentially lazy-loaded, so a priming call is suggested after system startup.
+You can also configure the service independently of loading the routing database. This works especially well in systems where there are child processes connecting to the same store (Redis, for example). In this case, the routing database will be loaded on first access (by the first child process of a Unicorn web server, for example) - it's essentially lazy-loaded, so a priming call is suggested after system startup. It is worth noting that if a shared data store isued, it will load the database only once, no matter how many clients connect.
 
 ```ruby
 RoutingNumber.options = { store_in: :redis, store_opts: { host: "localhost", db: 15 }, fetch_fed_data: true }
