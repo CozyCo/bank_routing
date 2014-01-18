@@ -19,6 +19,17 @@ RoutingNumber.get(121000358)["name"] # => "Bank of America"
 
     $ gem install bank_routing
 
+## Configuration
+
+By default, the routing number database is loaded from a local copy of the Federal Reserve dump file and stored in memory (it's not really that big). To change that behavior:
+
+```ruby
+require 'bank_routing'
+RoutingNumber.init!( store_in: :redis, store_opts: { host: "localhost", db: 15 }, fetch_fed_data: true )
+```
+
+This will store the routing number database, after being loaded from the Federal Reserve website, into Redis in database number 15. Access works exactly the same.
+
 ## Copyright
 
 Copyright (c) 2014 Cozy Services Ltd.
