@@ -1,5 +1,11 @@
 {
 	"114994196": {
+		"alias": "Mango Money",
+		"prepaid_card": true,
+		"possible_fraud_vector": true
+	},
+	"073972181": {
+		"alias": "NetSpend",
 		"prepaid_card": true,
 		"possible_fraud_vector": true
 	}
