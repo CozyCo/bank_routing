@@ -26,6 +26,7 @@ RoutingNumber.get(121000358)["name"] # => "Bank of America"
 By default, the routing number database is loaded from a local copy of the Federal Reserve dump file and stored in memory (it's not really that big). To change that behavior:
 
 ```ruby
+require 'bank_routing/storage/redis'
 RoutingNumber.init!( store_in: :redis, store_opts: { db: 15 }, fetch_fed_data: true )
 ```
 
@@ -34,6 +35,7 @@ This will store the routing number database, after being loaded from the Federal
 You can also configure the service independently of loading the routing database. This works especially well in systems where there are child processes connecting to the same store (Redis, for example). In this case, the routing database will be loaded on first access (by the first child process of a Unicorn web server, for example) - it's essentially lazy-loaded, so a priming call is suggested after system startup. It is worth noting that if a shared data store is used (Redis), it will load the database only once, no matter how many processes attempt access.
 
 ```ruby
+require 'bank_routing/storage/redis'
 RoutingNumber.options = {
 	store_in: :redis,
 	store_opts: {
