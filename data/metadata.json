@@ -5,8 +5,20 @@
 		"possible_fraud_vector": true
 	},
 	"073972181": {
-		"alias": "NetSpend",
+		"alias": "MetaBank/NetSpend",
 		"prepaid_card": true,
+		"possible_fraud_vector": true
+	},
+	"084003997": {
+		"alias": "MetaBank",
+		"possible_fraud_vector": true
+	},
+	"273970116": {
+		"alias": "MetaBank",
+		"possible_fraud_vector": true
+	},
+	"291471024": {
+		"alias": "MetaBank",
 		"possible_fraud_vector": true
 	}
 }
