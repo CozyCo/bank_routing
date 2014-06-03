@@ -33,8 +33,10 @@ describe RoutingNumber do
 
 	it "should use postgres too" do
 		require 'bank_routing/storage/postgres'
-		RoutingNumber.store_in :postgres, create_table: true, dbname: 'routing_number_test'
+		RoutingNumber.store_in :postgres, create_table: true, dbname: 'routing_number_test', cache_in_memory: true
 		RoutingNumber.get(121000358)[:name].should eq("Bank of America")
+		RoutingNumber.get(121000358)[:name].should eq("Bank of America")
+		RoutingNumber.get(114994196)[:prepaid_card].should eq(true)
 	end
 
 end

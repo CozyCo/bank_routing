@@ -6,7 +6,8 @@ class RoutingNumber
 
     DefaultOptions = {
       table_name: 'routing_numbers',
-      create_table: false
+      create_table: false,
+      cache_in_memory: false
     }
 
     Schema = [
@@ -47,7 +48,16 @@ class RoutingNumber
     def save_statement(num,obj)
       rehash = obj.merge( routing_number: num.to_i ).each_pair.to_a
       keys = rehash.map{ |(k,v)| k.to_s }.join( ',' )
-      values = rehash.map{ |(k,v)| v.to_s == "" ? 'NULL' : v.is_a?(String) ? "'#{ store.send( options[ :string_escape_method ], v.to_s ) }'" : v.to_s }.join( ',' )
+      values = rehash.map do |(k,v)|
+        case v
+        when String
+          v.to_s == "" ? 'NULL' : "'#{ store.send( options[ :string_escape_method ], v.to_s ) }'"
+        when TrueClass, FalseClass
+          v.to_s
+        else
+          v.to_s
+        end
+      end.join( ',' )
       "INSERT INTO #{ options[ :table_name ] }(#{ keys }) VALUES (#{ values })"
     end
 
@@ -61,11 +71,24 @@ class RoutingNumber
     end
 
     def get( num )
-      result = store.exec( get_statement( num ) )
-      if result.first
-        result.first.to_hash.inject({}) { |acc,(k,v)| acc[k.to_sym] = v; acc }
+      if options[ :cache_in_memory ] && ( res = cached_values[ num ] )
+        res
       else
-        nil
+        result = store.exec( get_statement( num ) )
+        val = result.first ? result.first.to_hash.inject({}) { |acc,(k,v)| acc[ k.to_sym ] = schema_types[ k.to_sym ] == :boolean ? v=='t' : v; acc } : nil
+        cached_values[ num ] = val if options[ :cache_in_memory ]
+        val
+      end
+    end
+
+    def cached_values
+      @cached_values ||= {}
+    end
+
+    def schema_types
+      @schema_types ||= Schema.inject({}) do |acc,(field, type)|
+        acc[field] = type
+        acc
       end
     end
 
