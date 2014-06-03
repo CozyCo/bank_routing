@@ -33,7 +33,7 @@ describe RoutingNumber do
 
 	it "should use postgres too" do
 		require 'bank_routing/storage/postgres'
-		RoutingNumber.store_in :postgres, create_table: true
+		RoutingNumber.store_in :postgres, create_table: true, dbname: 'routing_number_test'
 		RoutingNumber.get(121000358)[:name].should eq("Bank of America")
 	end
 
