@@ -129,7 +129,7 @@ class RoutingNumber
 		def process_line(line)
 			obj = unpack_line(line)
 			rt = obj.delete(:route)
-			store.save rt, obj.merge(:routingnumber_id => rt.to_s).merge(@metadata[rt.to_s] || {})
+			store.save rt, obj.merge(:routing_number => rt.to_i).merge(@metadata[rt.to_s] || {})
 			@cur += 1
 			if @cur % 10 == 0
 				tm = Time.now - @st_time

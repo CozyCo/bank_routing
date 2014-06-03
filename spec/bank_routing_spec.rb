@@ -31,4 +31,10 @@ describe RoutingNumber do
 		RoutingNumber.get(114994196)[:prepaid_card].should eq(true)
 	end
 
+	it "should use postgres" do
+		require 'bank_routing/storage/postgres'
+		RoutingNumber.store_in :postgres
+		RoutingNumber.get(121000358)[:name].should eq("Bank of America")
+	end
+
 end
