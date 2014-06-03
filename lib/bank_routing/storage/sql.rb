@@ -5,7 +5,8 @@ class RoutingNumber
   class SQLStore < StoreBase
 
     DefaultOptions = {
-      table_name: 'routing_numbers'
+      table_name: 'routing_numbers',
+      create_table: false
     }
 
     Schema = [
@@ -83,7 +84,12 @@ class RoutingNumber
     end
 
     def connection_class
-      Object.const_get( options[ :connection_class ] )
+      case options[ :connection_class ]
+      when Symbol, String
+        Object.const_get( options[ :connection_class ] )
+      else
+        options[ :connection_class ]
+      end
     end
 
     def reconnect!
@@ -106,7 +112,7 @@ class RoutingNumber
     end
 
     def loading!
-      create_table!
+      create_table! if options[ :create_table ]
       super
     end
 

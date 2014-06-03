@@ -7,7 +7,7 @@ class RoutingNumber
 
     DefaultOptions = {
       table_name: 'routing_numbers',
-      connection_class: :PG,
+      connection_class: PG,
       connection_method: :connect,
       disconnect_method: :finish,
       string_escape_method: :escape_string
@@ -22,7 +22,7 @@ class RoutingNumber
     ConnectOptions = PG::Connection::CONNECT_ARGUMENT_ORDER
 
     def create_table_statement
-      "DROP TABLE #{ options[ :table_name ] }; CREATE TABLE #{ options[ :table_name ] } (routingnumber_id serial PRIMARY KEY, #{ Schema.map {|(field,type)| "#{field.to_s} #{ TypeMap[type] }" }.join( ', ' ) })"
+      "CREATE TABLE IF NOT EXISTS #{ options[ :table_name ] } (routingnumber_id serial PRIMARY KEY, #{ Schema.map {|(field,type)| "#{field.to_s} #{ TypeMap[type] }" }.join( ', ' ) })"
     end
 
   end

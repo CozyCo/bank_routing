@@ -1,3 +1,4 @@
+require 'mysql2'
 require "bank_routing/storage/sql"
 
 class RoutingNumber
@@ -6,8 +7,7 @@ class RoutingNumber
 
     DefaultOptions = {
       table_name: 'routing_numbers',
-      require: 'mysql2',
-      connection_class: :"Mysql2::Client",
+      connection_class: Mysql2::Client,
       connection_method: :new,
       string_escape_method: :escape
     }
