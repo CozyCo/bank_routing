@@ -32,7 +32,7 @@ class RoutingNumber
 
 		DefaultOptions = {
 			store_in: :memory,
-			routing_data_url: "https://www.fededirectory.frb.org/FedACHdir.txt",
+			routing_data_url: "https://www.frbservices.org/EPaymentsDirectory/FedACHdir.txt",
 			routing_data_file: File.expand_path(File.dirname(__FILE__)) + "/../../data/FedACHdir.txt",
 			fetch_fed_data: false,
 			store_opts: {},

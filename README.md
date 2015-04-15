@@ -8,7 +8,7 @@
 
 Getting information about bank routing numbers is a huge pain. The authoritative source for this information is the Federal Reserve, and they only offer this information in a size-delimited text file available from their web site (that, by the way, has an iffy SSL certificate). This gem allows access to all of that information, plus a bunch of translations (mostly prettifying bank names) and extra metadata about the numbers and their corresponding institutions. This is an ongoing effort, and contributions are encouraged either in the code or in the JSON-encoded mapping and metadata files included in this repository.
 
-A snapshot copy of the ACH directory is included in this package for testing purposes - it is not recommended that you use the included file in production environments. It is best to set the system to download a new ACH file on startup. The most current Federal Reserve ACH directory can always be found at http://www.fededirectory.frb.org/FedACHdir.txt .
+A snapshot copy of the ACH directory is included in this package for testing purposes - it is not recommended that you use the included file in production environments. It is best to set the system to download a new ACH file on startup. The most current Federal Reserve ACH directory can always be found at https://www.frbservices.org/EPaymentsDirectory/FedACHdir.txt .
 
 ## Example
 
