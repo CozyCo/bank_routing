@@ -4,12 +4,10 @@ gem 'rake'
 
 group :development do
 	gem 'redcarpet'
-	gem 'rspec'
-	gem 'simplecov'
 	gem 'yard'
 end
 
-group :test do
+group :development, :test do
 	gem 'rspec'
 	gem 'simplecov'
 end
