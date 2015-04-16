@@ -1,3 +1,5 @@
+## THIS UTILITY IS NO LONGER MAINTAINED OR SUPPORTED.
+
 # bank_routing
 
 * [Homepage](https://github.com/cozy-oss/bank_routing)
