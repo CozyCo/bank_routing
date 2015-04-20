@@ -32,7 +32,8 @@ class RoutingNumber
 
 		DefaultOptions = {
 			store_in: :memory,
-			routing_data_url: "https://www.fededirectory.frb.org/FedACHdir.txt",
+			routing_data_agreement_url: "https://www.frbservices.org/EPaymentsDirectory/submitAgreement",
+			routing_data_url: "https://www.frbservices.org/EPaymentsDirectory/FedACHdir.txt",
 			routing_data_file: File.expand_path(File.dirname(__FILE__)) + "/../../data/FedACHdir.txt",
 			fetch_fed_data: false,
 			store_opts: {},
@@ -105,13 +106,16 @@ class RoutingNumber
 		end
 
 		def get_raw_data
-			unless options[:fetch_fed_data]
-				log.info "Using routing data from local file at: #{options[:routing_data_file]}"
-				File.new(options[:routing_data_file])
-			else
+			if options[:fetch_fed_data]
 				log.info "Getting new bank routing data from: #{options[:routing_data_url]}"
 				require 'typhoeus'
-				Typhoeus::Request.get(options[:routing_data_url], :ssl_verifypeer => false).body
+				response = Typhoeus::Request.post(options[:routing_data_agreement_url], body: 'agreementValue=Agree')
+				set_cookie = response.headers["Set-Cookie"].match(/JSESSIONID=.*?;/).to_s
+				Typhoeus::Request.get(options[:routing_data_url], ssl_verifypeer: false,
+					headers: { 'Cookie' => set_cookie } ).body
+			else
+				log.info "Using routing data from local file at: #{options[:routing_data_file]}"
+				File.new(options[:routing_data_file])
 			end
 		end
 
